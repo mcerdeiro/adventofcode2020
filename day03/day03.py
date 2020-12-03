@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-import itertools
 from functools import reduce
-from collections import defaultdict
 
 lines = open("day03.dat", "r").read().splitlines()
 
