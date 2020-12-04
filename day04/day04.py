@@ -21,14 +21,10 @@ def isHighInRange(high):
     hgt = int(high[0:-2])
     hgtun = high[-2:]
     if (hgtun == "cm"):
-        if hgt < 150:
-            return False
-        if hgt > 193:
+        if not(isNumberInRange(hgt, 150, 193)):
             return False
     elif (hgtun == "in"):
-        if hgt < 59:
-            return False
-        if hgt > 76:
+        if not(isNumberInRange(hgt, 59, 76)):
             return False
     else:
         return False
