@@ -5,7 +5,7 @@ import re
 
 def isNumber(d):
     try:
-        tmp = int(d)
+        int(d)
     except:
         return False
 
@@ -41,10 +41,6 @@ def isHclInRange(hcl):
         if re.search(pattern, color):
             return False
     return True
-
-lines = open("day04.dat", "r").read().splitlines()
-ans1 = 0
-ans2 = 0
 
 def check2(d, d2):
     byr = int(d2['byr'])
@@ -114,7 +110,10 @@ def part1(d):
     return found
 
 
+lines = open("day04.dat", "r").read().splitlines()
 data = []
+ans1 = 0
+ans2 = 0
 for line in lines:
     if (line == ""):
         ans1 += part1(data)
@@ -122,6 +121,11 @@ for line in lines:
         data = []
     else:
         data.append(line)
+
+if (len(data) != ""):
+    ans1 += part1(data)
+    ans2 += part2(data)
+
 
 print ("Part1: " + str(ans1))
 print ("Part2: " + str(ans2))
