@@ -7,18 +7,12 @@ ans2 = 0
 dic = defaultdict(int)
 
 for line in lines:
-    row = line[0:7]
-    col = line[7:]
+    line = line.replace("F","0")
+    line = line.replace("B","1")
+    line = line.replace("R","1")
+    line = line.replace("L","0")
+    val = int(line,2)
 
-    row = row.replace("F","0")
-    row = row.replace("B","1")
-    row = int(row,2)
-
-    col = col.replace("R","1")
-    col = col.replace("L","0")
-    col = int(col,2)
-
-    val = row*8+col
     dic[val] += 1
     ans1 = max(val, ans1)
 
