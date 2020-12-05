@@ -3,7 +3,6 @@ from collections import defaultdict
 
 lines = open("day05.dat", "r").read().splitlines()
 ans1 = 0
-ans2 = 0
 dic = defaultdict(int)
 
 for line in lines:
