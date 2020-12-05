@@ -2,23 +2,19 @@
 from collections import defaultdict
 
 lines = open("day05.dat", "r").read().splitlines()
-ans1 = 0
-dic = defaultdict(int)
+ans2 = []
 
 for line in lines:
-    line = line.replace("F","0")
-    line = line.replace("B","1")
-    line = line.replace("R","1")
-    line = line.replace("L","0")
+    line = "".join(['1' if (x in ["B", "R"]) else '0' for x in line])
     val = int(line,2)
+    ans2.append(val)
 
-    dic[val] += 1
-    ans1 = max(val, ans1)
+print("Part1:", max(ans2))
 
-print("Part1: ", ans1)
-last = 0
-for i in range(1000):
-    if (dic[i] == 1) & (dic[i+2] == 1) & (dic[i+1] == 0):
-        print("Part2: ", i+1)
+ans2.sort()
+for i in range(len(ans2)-1):
+    if (ans2[i]+2 == ans2[i+1]):
+        print("Part2:", ans2[i]+1)
+        exit()
 
 
