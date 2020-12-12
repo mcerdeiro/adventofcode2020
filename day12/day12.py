@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 from math import sin, cos, radians
+from collections import namedtuple
 
 lines = open("day12.dat").read().splitlines()
 
+Position = namedtuple("Position", "x y")
+movements = { "N": Position(0, 1), "S": Position(0, -1), "E": Position(1, 0), "W": Position(-1, 0)}
+
 def part1():
-    p=[0,0]
+    p = Position(0,0)
     dir = 0
     for line in lines:
         move = line[0]
@@ -15,23 +19,16 @@ def part1():
             else:
                 dir += count
         elif move == "F":
-            p[0] += count * cos(radians(dir))
-            p[1] += count * sin(radians(dir))
-        elif move == "N":
-            p[1] += count
-        elif move == "S":
-            p[1] -= count
-        elif move == "E":
-            p[0] += count
-        elif move == "W":
-            p   [0] -= count
+            p = Position(p.x + count * cos(radians(dir)), p.y + count * sin(radians(dir)))
+        else:
+            p = Position(p.x + movements[move].x * count, p.y + movements[move].y * count)
 
-    return round(abs(p[0])+abs(p[1]))
+    return round(abs(p.x)+abs(p.y))
 
 def part2():
-    p=[0,0]
+    p = Position(0,0)
     dir=0
-    way = [10, 1]
+    way = Position(10, 1)
 
     for line in lines:
         move = line[0]
@@ -43,18 +40,12 @@ def part2():
                 dir = -count
             s = sin(radians(dir))
             c = cos(radians(dir))
-            way[0], way[1] = [way[0] * c - way[1] * s, way[0] * s + way[1] * c]
+            way = Position(way.x * c - way.y * s, way.x * s + way.y * c)
         elif move == "F":
-            p[0] += way[0]*count
-            p[1] += way[1]*count
-        elif move == "N":
-            way[1] += count
-        elif move == "S":
-            way[1] -= count
-        elif move == "E":
-            way[0] += count
-        elif move == "W":
-            way[0] -= count
+            p = Position(p.x + way.x * count, p.y + way.y * count)
+            
+        else:
+            way = Position(way.x + movements[move].x * count, way.y + movements[move].y * count)
 
     return round(abs(p[0])+abs(p[1]))
 
