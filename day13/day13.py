@@ -31,4 +31,22 @@ for i in ids:
     n.append(i)
     a.append(i-ids_x.index(str(i)))
 
-print("Part2", chinese_remainder(n,a))
+
+print("Part2:", chinese_remainder(n,a))
+
+step = None
+timestamp = None
+for i in ids:
+    bus = i
+    offset = i - ids_x.index(str(i)) % bus
+    if timestamp == None:
+        timestamp = bus
+        step = bus
+    else:
+        tmp = timestamp + step
+        while (tmp) % bus != offset:
+            tmp += step
+        step *= bus
+        timestamp = tmp
+
+print("Part2:", timestamp)
