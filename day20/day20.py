@@ -176,7 +176,20 @@ def checkAndPos(k1, k2):
         withpositions[k2] = v2
         withpositions[k2]["pos"] = p
         withpositions[k2]["rf"] = foundr
+        postokey[p] = k2
         tiles.pop(k2)
+
+
+        p = withpositions[k2]["pos"]
+        keys = postokey.keys()
+        if all([(p[0]+1,p[1]) in keys, (p[0]-1,p[1]) in keys, (p[0],p[1]+1) in keys,(p[0],p[1]-1) in keys]):
+            withallnei[k2] = v2
+            withpositions.pop(k2)
+        
+        p = withpositions[k1]["pos"]
+        if all([(p[0]+1,p[1]) in keys, (p[0]-1,p[1]) in keys, (p[0],p[1]+1) in keys,(p[0],p[1]-1) in keys]):
+            withallnei[k1] = v1
+            withpositions.pop(k1)
 
         return True
 
@@ -210,6 +223,8 @@ def countOn(image):
 
 cont = True
 withpositions = dict()
+withallnei = dict()
+postokey = dict()
 
 # the first tile is used as referenced and entered manually
 # all others will be adapted based on the first one
@@ -217,7 +232,9 @@ k = list(tiles.keys())[0]
 withpositions[k] = tiles[k]
 withpositions[k]["pos"] = (0,0)
 withpositions[k]["rf"] = withpositions[k]["r"][0]
+postokey[(0,0)] = k
 tiles.pop(k)
+
 
 while len(tiles) != 0:
     found = False
@@ -236,6 +253,8 @@ minx = 1000
 miny = 1000
 maxx = -1000
 maxy = -1000
+
+withpositions = { **withpositions, **withallnei}
 
 for k,v in withpositions.items():
     minx = min(v["pos"][0], minx)
