@@ -19,7 +19,16 @@ def processInput(lines):
 
     return D
 
-def play(d1: deque(), d2: deque(), part1: bool = False):
+def play(d1: deque(), d2: deque(), part1: bool = False, sub = False):
+    if (sub == True) & (max(d1) >= max(d2)):
+        # if this is a subgame and player 1 has the
+        # highest card it can only win the game:
+        #   * by geting all cards
+        #   * or if a state is repated.
+        # player 2 can never win the highest card so will
+        # always lose
+        return 0
+
     sgw = None
     MYD = set()
 
@@ -36,7 +45,7 @@ def play(d1: deque(), d2: deque(), part1: bool = False):
             if (len(d1) >= p1) & (len(d2) >= p2):
                 d1c = deque(list(d1)[0:p1])
                 d2c = deque(list(d2)[0:p2])
-                sgw = play(d1c, d2c)
+                sgw = play(d1c, d2c, part1, True)
             else:
                 sgw = None
             
