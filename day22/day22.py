@@ -24,7 +24,7 @@ def play(d1: deque(), d2: deque(), part1: bool = False):
     MYD = set()
 
     while (len(d1) > 0) & (len(d2) > 0):
-        tup = tuple([tuple(d1),"*", tuple(d2)])
+        tup = tuple([tuple([tuple(d1),"*", tuple(d2)])])
         tup = hash(tup)
         if tup in MYD:
             return 0
