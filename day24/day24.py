@@ -5,8 +5,9 @@ from copy import deepcopy
 lines = open("day24.dat").read().splitlines()
 
 def calc(line):
-  x = 0.0
-  y = 0.0
+  movements = { "ne": (0.5, 0.5), "se": (0.5, -0.5), "sw": (-0.5, -0.5),
+              "nw": (-0.5,0.5), "w": (-1.0, 0.0), "e": (1.0, 0.0) }
+  coord = (0.0, 0.0)
   i = 0
   while i < len(line):
     d = line[i]
@@ -21,27 +22,13 @@ def calc(line):
       d = d[0]
       i -= 1
 
-    if (d == "ne"):
-      y += 0.5
-      x += 0.5
-    elif (d == "se"):
-      y += -0.5
-      x += 0.5
-    elif (d == "sw"):
-      y += -0.5
-      x += -0.5
-    elif (d == "nw"):
-      y += 0.5
-      x += -0.5
-    elif (d == "w"):
-      x -= 1.0
-    elif (d == "e"):
-      x += 1.0
+    if d in movements.keys():
+      coord = (coord[0] + movements[d][0], coord[1] + movements[d][1])
     else:
       print(d)
       assert(0)
 
-  return (x,y)
+  return coord
 
 def getBlackNei(x,y):
   global pos
@@ -63,13 +50,8 @@ def getNei():
     tocheck = [(x+1,y),(x-1,y),(x+0.5,y+0.5),\
     (x+0.5,y-0.5), (x-0.5,y-0.5), (x-0.5,y+0.5)]
     for to in tocheck:
-      if to in nei:
-        pass
-      else:
-        if to in pos:
-          pass
-        else:
-          nei.add(to)
+      if to not in pos:
+        nei.add(to)
 
   return nei
 
@@ -77,10 +59,9 @@ def move():
   new = set()
   for i in pos:
     count = getBlackNei(i[0],i[1])
-    if (count == 0) | (count > 2):
-      pass
-    else:
+    if not ((count == 0) | (count > 2)):
       new.add(i)
+
   nei = getNei()
   for n in nei:
     count = getBlackNei(n[0], n[1])
@@ -89,8 +70,8 @@ def move():
   
   return new
 
-pos = set()
 
+pos = set()
 for line in lines:
   p = calc(line)
   if p in pos:
@@ -101,8 +82,7 @@ for line in lines:
 print("Part1:", len(pos))
 
 for i in range(100):
-  tmp = move()
-  pos = tmp
+  pos = move()
 
 print("Part2:", len(pos))
 
