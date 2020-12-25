@@ -21,11 +21,11 @@ def encripty(sb, ls):
 
   return val
 
-ls1 = calcLoopSize(7, 15733400)
-ls2 = calcLoopSize(7, 6408062)
+ls1 = calcLoopSize(7, inp[0])
+ls2 = calcLoopSize(7, inp[1])
 
-enc1 = encripty(6408062, ls1)
-enc2 = encripty(15733400, ls2)
+enc1 = encripty(inp[1], ls1)
+enc2 = encripty(inp[0], ls2)
 
 assert(enc1 == enc2)
 print("Part1:", enc1)
